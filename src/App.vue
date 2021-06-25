@@ -1,29 +1,49 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link>
-  </div>
   <router-view/>
+  <div v-show="showAlert" class="custom-modal-overlay">
+    <div class="custom-modal">
+      <div class="row no-gutters">
+        <div class="col-12">
+          <h5 class="float-right">X</h5>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
+<script lang="ts">
+import { Options, Vue } from 'vue-class-component';
 
+export default class App extends Vue {
+
+  showAlert = true
+
+}
+
+</script>
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+
+.custom-modal {
+  background-color: rgba(255, 255, 255, 1);
+  padding: 10px;
+  position: fixed;
+  border-radius: 5px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 400px;
+  overflow: auto;
 }
 
-#nav {
-  padding: 30px;
+
+.custom-modal-overlay {
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
 </style>
