@@ -1,0 +1,75 @@
+<template>
+<div class="col-3">
+	<div class="card">
+		<img @click="showContatos" :src="foto" class="card-img-top favorito" alt="...">
+		<div class="card-body">
+			<h6>{{ favorito.nome }}</h6>
+			<h6>{{ resumoEndereco }}</h6>
+			<button @click="removerFavorito()" class="btn btn-outline-secondary">Remover dos favoritos</button>
+		</div>
+	</div>
+</div>
+</template>
+<script lang="ts">
+import { Options, Vue } from 'vue-class-component';
+import Basic from '@/views/Basic.vue'; // @ is an alias to /src
+import { User, Role, Pessoa, Endereco, Cidade, Estado, Pais, Contato, ContatoTipo, ContatoCategoria } from '@/types'
+var Buffer = require('buffer/').Buffer
+
+@Options({
+	props: {
+		favorito: Object
+	}
+})
+export default class FavoritoCard extends Basic {
+
+	favorito: Pessoa = {
+	    id: 0,
+	    nome: '',
+	    cpf: '',
+	    data_nascimento: '',
+	    foto: ''
+	}
+
+	get foto() {
+		return this.favorito.foto != '' ? `data:${this.favorito.foto.mimetype};base64,${Buffer.from(this.favorito.foto.data).toString('base64')}` : require('@/assets/user-default.jpeg')
+	}
+
+	get resumoEndereco() {
+		return this.favorito.endereco!.cidade!.nome + ', ' + this.favorito.endereco!.logradouro + ', ' + this.favorito.endereco!.numero + ' - ' + this.favorito.endereco!.bairro
+	}
+
+	showContatos() {
+		this.$emit('showContatos', this.favorito)
+	}
+
+	removerFavorito() {
+    	this.axiosInstance.delete('/favoritos/' + this.favorito.id).then( (response: any) => {
+    		this.$router.go(0)
+    	}).catch( (err: any) => {
+    		this.tratarErro(err)
+    	})
+	}
+
+}
+
+
+</script>
+<style scoped>
+	.btn {
+		width: 100%;
+		text-align: center;
+	}
+
+	.card {
+		padding: 0;
+	}
+
+	.favorito {
+		cursor: pointer;
+	}
+
+	.card-body {
+		padding: 10px;
+	}
+</style>

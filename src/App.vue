@@ -1,49 +1,35 @@
 <template>
-  <router-view/>
-  <div v-show="showAlert" class="custom-modal-overlay">
-    <div class="custom-modal">
-      <div class="row no-gutters">
-        <div class="col-12">
-          <h5 class="float-right">X</h5>
-        </div>
-      </div>
-    </div>
-  </div>
+  <router-view @showMessage="showMessage($event)" />
+  <Alert @closeAlert="closeAlert" :showAlert="showAlert" :message="alertMessage"/>
 </template>
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component';
+import Alert from '@/components/Alert.vue'; // @ is an alias to /src
 
+@Options({
+  components: {
+    Alert
+  }
+})
 export default class App extends Vue {
+  showAlert = false
+  alertMessage = ''
 
-  showAlert = true
+  closeAlert() {
+    this.showAlert = false
+  }
 
+  openAlert() {
+    this.showAlert = true
+  }
+
+  showMessage(message: string) {
+    console.log('############## app showMessage')
+    this.alertMessage = message
+    this.openAlert()
+  }
 }
 
 </script>
-<style>
-
-.custom-modal {
-  background-color: rgba(255, 255, 255, 1);
-  padding: 10px;
-  position: fixed;
-  border-radius: 5px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 600px;
-  height: 400px;
-  overflow: auto;
-}
-
-
-.custom-modal-overlay {
-  background-color: rgba(0, 0, 0, 0.7);
-  z-index: 1000;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-
+<style scoped>
 </style>

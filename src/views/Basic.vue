@@ -22,6 +22,18 @@ export default class Basic extends Vue {
 		}
 	}
 
+	tratarErro(err: any) {
+		console.log('########## err')
+		console.log(err)
+		/*Object.entries(err).forEach( (entry) => {
+			console.log(entry[0])
+			console.log(entry[1])
+		})*/
+		console.log('############## emit')
+		this.$emit('showMessage', err.response.data.message ?? 'Erro')
+		console.log('############## emited')
+	}
+
 }
 
 </script>
