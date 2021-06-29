@@ -50,16 +50,9 @@ export default class PessoaCard extends Basic {
 	}
 
 	excluirPessoa() {
-    	this.axiosInstance.delete('/pessoa/' + this.pessoa.id).then( (response: any) => {
-    		this.$emit('reload')
-    	}).catch( (err: any) => {
-			this.$emit('showMessage', err.response.data.message ?? 'Erro')
-    	})
+		this.$emit('excluirPessoa', this.pessoa.id)
 	}
-
 }
-
-
 </script>
 <style scoped>
 	.btn {

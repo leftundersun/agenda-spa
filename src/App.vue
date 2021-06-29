@@ -4,7 +4,7 @@
 </template>
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component';
-import Alert from '@/components/Alert.vue'; // @ is an alias to /src
+import Alert from '@/components/overlaid/Alert.vue'; // @ is an alias to /src
 
 @Options({
   components: {

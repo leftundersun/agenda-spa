@@ -19,8 +19,8 @@
 import { Options, Vue } from 'vue-class-component';
 import Basic from '@/views/Basic.vue'; // @ is an alias to /src
 import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
-import FavoritoCard from '@/components/FavoritoCard.vue'; // @ is an alias to /src
-import ModalContatos from '@/components/ModalContatos.vue'; // @ is an alias to /src
+import FavoritoCard from '@/components/lists/items/FavoritoCard.vue'; // @ is an alias to /src
+import ModalContatos from '@/components/overlaid/ModalContatos.vue'; // @ is an alias to /src
 import { User, Role, Pessoa, Endereco, Cidade, Estado, Pais, Contato, ContatoTipo, ContatoCategoria } from '@/types'
 
 @Options({
