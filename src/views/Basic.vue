@@ -10,30 +10,25 @@ export default class Basic extends Vue {
 
 	beforeMount() {
 		var token = localStorage.getItem('token')
-		if (token != null && token != undefined && token != '') {
-			this.axiosInstance = axios.create({
-				baseURL: 'http://localhost:3000',
-				headers: {
-					'authorization': 'Bearer ' + token
-				}
-			})
-		} else {
-			this.$router.replace('/login')
-		}
+		this.axiosInstance = axios.create({
+			baseURL: 'http://localhost:3000',
+			headers: {
+				'authorization': 'Bearer ' + (token ?? '')
+			}
+		})
 	}
 
 	tratarErro(err: any) {
-		console.log('########## err')
+		console.log('############# err')
 		console.log(err)
-		/*Object.entries(err).forEach( (entry) => {
-			console.log(entry[0])
-			console.log(entry[1])
-		})*/
-		console.log('############## emit')
-		this.$emit('showMessage', err.response.data.message ?? 'Erro')
-		console.log('############## emited')
+		console.log('############# err.response')
+		console.log(err.response)
+		if (err.response.status == 401) {
+			this.$router.replace('/login')
+		} else {
+			this.$emit('showMessage', err.response.data.message ?? 'Erro')
+		}
 	}
-
 }
 
 </script>
@@ -41,10 +36,6 @@ export default class Basic extends Vue {
 	
 .card {
 	padding: 10px;
-}
-
-.form-group {
-	margin-top: 10px;
 }
 
 </style>

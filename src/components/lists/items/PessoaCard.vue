@@ -71,4 +71,8 @@ export default class PessoaCard extends Basic {
 	.card-body {
 		padding: 10px;
 	}
+
+	.col-3 {
+		margin-top: 10px;
+	}
 </style>

@@ -5,7 +5,7 @@
                 <h4>Pessoas</h4>
             </div>
             <div class="col-6">
-                <button class="btn btn-outline-primary float-end">Criar pessoa</button>
+                <router-link to="/pessoa/create" class="btn btn-outline-primary float-end">Criar pessoa</router-link>
             </div>
         </div>
         <Paginacao
@@ -30,7 +30,6 @@
         @closeModal="closeConfirmationModal()"
         @callback="confirmationCallback()"
     />
-    <LoadingModal :showModal="carregando" />
     <ModalContatos @closeModal="closeModal" :showModal="showModalContatos" :pessoa="pessoaModal" />
 </template>
 <script lang="ts">
@@ -39,7 +38,6 @@ import Basic from '@/views/Basic.vue'; // @ is an alias to /src
 import PessoaCard from '@/components/lists/items/PessoaCard.vue'; // @ is an alias to /src
 import Paginacao from '@/components/lists/Paginacao.vue'; // @ is an alias to /src
 import ConfirmationModal from '@/components/overlaid/ConfirmationModal.vue'; // @ is an alias to /src
-import LoadingModal from '@/components/overlaid/LoadingModal.vue'; // @ is an alias to /src
 import ModalContatos from '@/components/overlaid/ModalContatos.vue'; // @ is an alias to /src
 import { User, Role, Pessoa, Endereco, Cidade, Estado, Pais, Contato, ContatoTipo, ContatoCategoria } from '@/types'
 
@@ -47,13 +45,11 @@ import { User, Role, Pessoa, Endereco, Cidade, Estado, Pais, Contato, ContatoTip
     components: {
         PessoaCard,
         ConfirmationModal,
-        LoadingModal,
         Paginacao,
         ModalContatos
     }
 })
 export default class ListPessoas extends Basic {
-
 
     pessoaModal: Pessoa = {
         id: 0,
@@ -71,8 +67,6 @@ export default class ListPessoas extends Basic {
     selectedPage = 1
     search = ''
 
-    carregando = false
-
     showConfirmationModal = false
     confirmationQuestion = 'Deseja excluir permanentemente essa pessoa e todos os contatos vinculados a ela?'
 
@@ -89,23 +83,24 @@ export default class ListPessoas extends Basic {
     }
 
     searchPessoas() {
-        this.carregando = true
-        var options: any = {
+        this.$emit('showCarregando')
+        var url = '/pessoa/list?'
+        if (this.search.length > 2) {
+            //options.params.search = this.search
+            url += 'search=' + this.search + '&'
+        }
+        url += 'page=' + this.selectedPage
+        /*var options: any = {
             params: {
                 page: this.selectedPage
             }
-        }
-        if (this.search.length > 2) {
-            options.params.search = this.search
-        }
-        this.axiosInstance.get('/pessoa/list', options).then( (response: any) => {
-            this.carregando = false
-            console.log('########## response')
-            console.log(response)
+        }*/
+        this.axiosInstance.get(url).then( (response: any) => {
+            this.$emit('hideCarregando')
             this.pessoas = response.data.pessoas
             this.totalCount = response.data.totalCount
         }).catch( (err: any) => {
-            this.carregando = false
+            this.$emit('hideCarregando')
             this.tratarErro(err)
         })
     }
@@ -118,6 +113,7 @@ export default class ListPessoas extends Basic {
     searchChange(search: string) {
         console.log()
         if (search != this.search) {
+            this.selectedPage = 1
             this.search = search
             this.searchPessoas()
         }
@@ -126,13 +122,13 @@ export default class ListPessoas extends Basic {
     excluirPessoa(id: Number) {
         this.confirmationCallback = () => {
             this.showConfirmationModal = false
-            this.carregando = true
+            this.$emit('showCarregando')
             this.axiosInstance.delete('/pessoa/' + id).then( (response: any) => {
-                this.carregando = false
+                this.$emit('hideCarregando')
                 this.searchPessoas()
                 this.$emit('showMessage', response.data.message)
             }).catch( (err: any) => {
-                this.carregando = false
+                this.$emit('hideCarregando')
                 this.tratarErro(err)
             })
         }
@@ -155,4 +151,5 @@ export default class ListPessoas extends Basic {
 }
 
 </script>
-<style scoped></style>
+<style scoped>
+</style>

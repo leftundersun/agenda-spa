@@ -9,7 +9,10 @@
   	<div class="container">
   		<div class="row">
   			<div class="col-12">
-				<router-view @showMessage="showMessage($event)"/>
+				<router-view
+					@showMessage="showMessage($event)"
+				    @showCarregando="showCarregando()"
+				    @hideCarregando="hideCarregando()"/>
   			</div>
   		</div>
   	</div>
@@ -29,6 +32,13 @@ export default class Main extends Basic {
 	logoff() {
 		localStorage.removeItem('token')
 		this.$router.replace('/login')
+	}
+
+	showCarregando() {
+		this.$emit('showCarregando')
+	}
+	hideCarregando() {
+		this.$emit('hideCarregando')
 	}
 
 }

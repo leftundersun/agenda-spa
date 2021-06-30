@@ -5,24 +5,24 @@
 				<div class="card">
 					<div class="row">
 						<div class="col-12 text-center">
-							<h4>
-								Login
-							</h4>
+							<h4>Login</h4>
 							<form @submit.prevent="login">
-								<div class="form-group">
-									<label for="username">Nome de usuário</label>
-									<input v-model="credentials.user" name="username" type="text" class="form-control">
-								</div>
-								<div class="form-group">
-									<label for="password">Senha</label>
-									<input v-model="credentials.pass" name="password" type="password" class="form-control">
-								</div>
-								<div class="form-group">
-									<input v-model="salvarLogin" name="salvarLogin" type="checkbox" class="form-check-input" style="margin-right: 5px;">
-									<label for="salvarLogin">Salvar credenciais de acesso</label>
-								</div>
-								<div class="form-group">
-									<button class="btn btn-primary">Entrar</button>
+								<div class="row g-2">
+									<div class="col-12">
+										<label for="username">Nome de usuário</label>
+										<input v-model="credentials.user" name="username" type="text" class="form-control">
+									</div>
+									<div class="col-12">
+										<label for="password">Senha</label>
+										<input v-model="credentials.pass" name="password" type="password" class="form-control">
+									</div>
+									<div class="col-12">
+										<input v-model="salvarLogin" name="salvarLogin" type="checkbox" class="form-check-input" style="margin-right: 5px;">
+										<label for="salvarLogin">Salvar credenciais de acesso</label>
+									</div>
+									<div class="col-12">
+										<button class="btn btn-primary">Entrar</button>
+									</div>
 								</div>
 							</form>
 						</div>

@@ -1,16 +1,23 @@
 <template>
-	<div class="row">
+	<div class="row mt-2">
 		<div class="col-8">
-			<button @click="firstPage()" class="btn btn-secondary">Primeira</button>
-			<button @click="prevPage()" class="btn btn-secondary">Anterior</button>
-			<div class="btn-group">
-				<button
-					v-for="page in pages" :key="page"
-					@click="selectPage(page)"
-					:class="{ active: page == selectedPage }" class="btn btn-secondary">{{ page }}</button>
+			<div class="row">
+				<div class="col-12">
+					<button @click="firstPage()" class="btn btn-secondary">Primeira</button>
+					<button @click="prevPage()" class="btn btn-secondary">Anterior</button>
+					<div class="btn-group">
+						<button
+							v-for="page in pages" :key="page"
+							@click="selectPage(page)"
+							:class="{ active: page == selectedPage }" class="btn btn-secondary">{{ page }}</button>
+					</div>
+					<button @click="nextPage()" class="btn btn-secondary">Próxima</button>
+					<button @click="lastPage()" class="btn btn-secondary">Última</button>
+				</div>
+				<div class="col-12">
+					<span>Mostrando de {{ first }} até {{ last }} de {{ totalCount }} resultados</span>
+				</div>
 			</div>
-			<button @click="nextPage()" class="btn btn-secondary">Próxima</button>
-			<button @click="lastPage()" class="btn btn-secondary">Última</button>
 		</div>
 		<div class="col-4">
 			<input @keyup="searchKeyUp($event)" type="text" class="float-end" placeholder="Procurar...">
@@ -28,10 +35,17 @@ import { Options, Vue } from 'vue-class-component';
 })
 export default class Paginacao extends Vue {
 
+	perPage = 20
 	totalCount = 0
 	selectedPage = 1
+	get first() {
+		return ( (this.selectedPage - 1) * this.perPage ) + 1
+	}
+	get last() {
+		return (this.selectedPage < this.pageQtd) ? (this.selectedPage * this.perPage) : this.totalCount
+	}
 	get pageQtd() {
-		return this.totalCount > 0 ? Math.ceil(this.totalCount / 20) : 1
+		return this.totalCount > 0 ? Math.ceil(this.totalCount / this.perPage) : 1
 	}
 	get pages() {
 		var pages = []
@@ -87,13 +101,8 @@ export default class Paginacao extends Vue {
 			this.$emit('selectPage', this.pageQtd)
 		}
 	}
-
 }
 
 </script>
 <style scoped>
-	.row {
-		margin-top: 10px;
-		margin-bottom: 10px;
-	}
 </style>

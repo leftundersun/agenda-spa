@@ -44,7 +44,8 @@ export default class Home extends Basic {
     nome: '',
     cpf: '',
     data_nascimento: '',
-    foto: ''
+    foto: '',
+    contatos: []
   }
   showModal = false
 

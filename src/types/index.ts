@@ -65,7 +65,7 @@ export interface Contato {
     contato_tipo_id: Number;
     contatoTipo?: ContatoTipo;
     contato_categoria_id: Number;
-    ContatoCategoria?: ContatoCategoria;
+    contatoCategoria?: ContatoCategoria;
 }
 
 export interface ContatoTipo {
