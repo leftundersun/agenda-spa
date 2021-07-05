@@ -18,7 +18,7 @@
 		</div>
 		<div class="col-4">
 			<label for="cep" class="form-label">CEP</label>
-			<input name="cep" class="form-control" v-model="endereco.cep" type="text">
+			<input name="cep" v-maska="'#####-###'" class="form-control" v-model="endereco.cep" type="text">
 		</div>
 		<div class="col-4">
 			<label for="pais" class="form-label">País</label>

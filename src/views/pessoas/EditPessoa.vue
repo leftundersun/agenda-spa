@@ -2,12 +2,12 @@
   	<div class="card large-margin-bottom">
 	    <div class="row">
 	      <div class="col-12">
-	        <h4>Cadastrar uma nova pessoa</h4>
+	        <h4>Editar pessoa</h4>
 	      </div>
 	    </div>
 	    <div class="row">
 	    	<div class="col-12">
-	    		<form @submit.prevent="postPessoa()">
+	    		<form @submit.prevent="updatePessoa()">
 	    			<div class="row">
 	    				<div class="col-12">
 	    					<FormPessoa v-model:pessoa="pessoa" />
@@ -32,7 +32,7 @@ import { User, Role, Pessoa, Endereco, Cidade, Estado, Pais, Contato, ContatoTip
 		FormPessoa
 	}
 })
-export default class CreatePessoa extends Basic {
+export default class EditPessoa extends Basic {
 
 	pessoa: Pessoa = {
 		id: 0,
@@ -67,7 +67,11 @@ export default class CreatePessoa extends Basic {
 	    contatos: []
 	}
 
-	postPessoa() {
+	mounted() {
+
+	}
+
+	updatePessoa() {
 		var formData = new FormData()
 		formData.append('foto', this.pessoa.foto)
 		formData.append('pessoa', JSON.stringify(this.pessoa) )

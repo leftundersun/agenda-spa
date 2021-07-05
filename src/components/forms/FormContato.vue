@@ -3,7 +3,7 @@
 		<div class="row g-3">
 			<div class="col-6">
 				<label for="tipo" class="form-label">Tipo</label>
-				<select @change="changeTipo()" name="tipo" class="form-select" v-model="contato.contatoTipo.id">
+				<select @change="changeTipo($event)" name="tipo" class="form-select" v-model="contato.contatoTipo.id">
 					<option value="0">Selecione o tipo</option>
 					<option v-for="tipo in tipos" :key="tipo.id" :value="tipo.id">{{ tipo.descricao }}</option>
 				</select>
@@ -17,7 +17,8 @@
 			</div>
 			<div class="col-6">
 				<label for="valor" class="form-label">Contato</label>
-				<input name="valor" v-model="contato.valor" type="text" class="form-control">
+				<input v-if="contato.contatoTipo.id == 3" name="valor" v-model="contato.valor" type="text" class="form-control" :disabled="isntTipoSelected" placeholder="fulano@gmail.com">
+				<input v-else name="valor" v-model="contato.valor" v-maska="valueMask" type="text" class="form-control" :disabled="isntTipoSelected" :placeholder="valueMask">
 			</div>
 			<div class="col-6">
 				<label for="publico" class="form-label">Público</label>
@@ -60,6 +61,11 @@ export default class FormContato extends Basic {
     }
 	tipos: Array<ContatoTipo> = []
 	categorias: Array<ContatoCategoria> = []
+	get isntTipoSelected() {
+		return this.contato.contatoTipo!.id == 0
+	}
+
+	valueMask: any = '#*'
 
 	mounted() {
 		this.getTipos()
@@ -67,7 +73,23 @@ export default class FormContato extends Basic {
 	}
 
 	changeTipo() {
-		//set masks
+		switch (this.contato.contatoTipo!.id) {
+			case 1:
+				this.contato.valor = ''
+				this.valueMask = '+55 (##) ##### ####'
+				break;
+			case 2:
+				this.contato.valor = ''
+				this.valueMask = '+55 (##) #### ####'
+				break;
+			case 3:
+				this.contato.valor = ''
+				this.valueMask = '#*'
+				break;
+			default:
+				this.valueMask = ''
+				break;
+		}
 	}
 
 	getTipos() {

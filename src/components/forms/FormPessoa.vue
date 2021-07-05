@@ -8,15 +8,15 @@
 			</div>
 			<div class="col-4">
 				<label for="cpf" class="form-label">CPF</label>
-				<input name="cpf" v-model="pessoa.cpf" type="text" class="form-control">
+				<input name="cpf" v-maska="'###.###.###-##'" v-model="pessoa.cpf" type="text" class="form-control">
 			</div>
 			<div class="col-4">
 				<label for="data_nascimento" class="form-label">Data de nascimento</label>
-				<input name="data_nascimento" v-model="pessoa.data_nascimento" type="text" class="form-control">
+				<input name="data_nascimento" v-maska="'##/##/####'" v-model="pessoa.data_nascimento" type="text" class="form-control">
 			</div>
 			<div class="col-6">
 				<label for="foto" class="form-label">Foto</label><br>
-				<input name="foto" @change="changeFoto($event)" type="file">
+				<input name="foto" @change="changeFoto($event)" type="file" accept=".png, .jpg, .jpeg">
 			</div>
 			<div class="col-6">
 				<label class="form-label">Preview</label>
