@@ -27,7 +27,7 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import(/* webpackChunkName: "pessoaCreate" */ '../views/pessoas/CreatePessoa.vue')
       },
       {
-        path: '/pessoa/edit',
+        path: '/pessoa/edit/:id',
         name: 'Edit',
         component: () => import(/* webpackChunkName: "pessoaEdit" */ '../views/pessoas/EditPessoa.vue')
       },

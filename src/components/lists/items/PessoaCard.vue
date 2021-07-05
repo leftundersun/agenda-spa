@@ -34,7 +34,7 @@ export default class PessoaCard extends Basic {
 	}
 
 	get foto() {
-		return this.pessoa.foto != '' ? `data:${this.pessoa.foto.mimetype};base64,${Buffer.from(this.pessoa.foto.data).toString('base64')}` : require('@/assets/user-default.jpeg')
+		return this.pessoa.foto != '' ? `data:image;base64,${Buffer.from(this.pessoa.foto.data).toString('base64')}` : require('@/assets/user-default.jpeg')
 	}
 
 	get resumoEndereco() {
@@ -46,7 +46,7 @@ export default class PessoaCard extends Basic {
 	}
 
 	editarPessoa() {
-		this.$emit('showMessage', 'Not implemented')
+		this.$emit('editarPessoa', this.pessoa.id)
 	}
 
 	excluirPessoa() {

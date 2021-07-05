@@ -12,6 +12,7 @@
     "bootstrap": "^5.0.2",
     "buffer": "^4.9.2",
     "maska": "^1.4.3",
+    "moment": "^2.29.1",
     "vue": "^3.0.0",
     "vue-class-component": "^8.0.0-0",
     "vue-router": "^4.0.0-0"

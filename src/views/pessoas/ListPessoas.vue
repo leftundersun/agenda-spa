@@ -19,6 +19,7 @@
                 @showMessage="showMessage($event)"
                 @showInfo="setPessoaModal($event)"
                 @excluirPessoa="excluirPessoa($event)"
+                @editarPessoa="editarPessoa($event)"
                 v-for="pessoa in pessoas"
                 :pessoa="pessoa"
                 :key="pessoa.id"/>
@@ -117,6 +118,10 @@ export default class ListPessoas extends Basic {
             this.search = search
             this.searchPessoas()
         }
+    }
+
+    editarPessoa(id: Number) {
+        this.$router.push('/pessoa/edit/' + id)
     }
 
     excluirPessoa(id: Number) {

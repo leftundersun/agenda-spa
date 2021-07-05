@@ -25,6 +25,8 @@
 import { Options, Vue } from 'vue-class-component';
 import Basic from '@/views/Basic.vue'; // @ is an alias to /src
 import FormPessoa from '@/components/forms/FormPessoa.vue'; // @ is an alias to /src
+import moment from 'moment';
+var Buffer = require('buffer/').Buffer
 import { User, Role, Pessoa, Endereco, Cidade, Estado, Pais, Contato, ContatoTipo, ContatoCategoria } from '@/types'
 
 @Options({
@@ -68,7 +70,18 @@ export default class EditPessoa extends Basic {
 	}
 
 	mounted() {
+		this.axiosInstance.get('/pessoa/' + this.$route.params.id).then( (response: any) => {
+			this.pessoa = this.format(response.data.pessoa)
+		}).catch( (err: any) => {
+			this.tratarErro(err)
+		})
+	}
 
+	format(data: Pessoa) {
+		data.data_nascimento = moment(data.data_nascimento).format('DD/MM/YYYY')
+		data.cpf = data.cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4')
+		data.foto = data.foto == '' ?? `data:image;base64,${Buffer.from(data.foto.data).toString('base64')}`
+		return data
 	}
 
 	updatePessoa() {
