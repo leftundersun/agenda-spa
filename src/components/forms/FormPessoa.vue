@@ -1,34 +1,11 @@
 <template>
 	<div class="card mt-2">
 		<h5 class="text-info">Dados pessoais</h5>
-		<div class="row g-3">
-			<div class="col-4">
-				<label for="nome" class="form-label">Nome</label>
-				<input name="nome" v-model="pessoa.nome" type="text" class="form-control">
-			</div>
-			<div class="col-4">
-				<label for="cpf" class="form-label">CPF</label>
-				<input name="cpf" v-maska="'###.###.###-##'" v-model="pessoa.cpf" type="text" class="form-control">
-			</div>
-			<div class="col-4">
-				<label for="data_nascimento" class="form-label">Data de nascimento</label>
-				<input name="data_nascimento" v-maska="'##/##/####'" v-model="pessoa.data_nascimento" type="text" class="form-control">
-			</div>
-			<div class="col-6">
-				<label for="foto" class="form-label">Foto</label><br>
-				<input name="foto" @change="changeFoto($event)" type="file" accept=".png, .jpg, .jpeg">
-			</div>
-			<div class="col-6">
-				<label class="form-label">Preview</label>
-				<div class="card foto-preview-card">
-					<img :src="fotoPreview" width="300" alt="">
-				</div>
-			</div>
-		</div>
+		<FormDadosPessoa v-model:pessoa="pessoa" />
 	</div>
 	<div class="card mt-2">
 		<h5 class="text-info">Endereço</h5>
-		<FormEndereco v-model:endereco="pessoa.endereco" />
+		<FormEndereco ref="formEndereco" v-model:endereco="pessoa.endereco" />
 	</div>
 	<div class="card mt-2">
 		<div class="row">
@@ -44,6 +21,9 @@
 				<FormContato 
 					v-for="(contato, index) in pessoa.contatos"
 					:contato="contato"
+					:index="index"
+					@removeContato="removeContato($event)"
+					@excluirContato="excluirContato($event)"
 					:key="index"/>
 			</div>
 		</div>
@@ -54,6 +34,8 @@ import { Options, Vue } from 'vue-class-component';
 import Basic from '@/views/Basic.vue'; // @ is an alias to /src
 import FormEndereco from '@/components/forms/FormEndereco.vue'; // @ is an alias to /src
 import FormContato from '@/components/forms/FormContato.vue'; // @ is an alias to /src
+import FormDadosPessoa from '@/components/forms/FormDadosPessoa.vue'; // @ is an alias to /src
+var Buffer = require('buffer/').Buffer
 import { User, Role, Pessoa, Endereco, Cidade, Estado, Pais, Contato, ContatoTipo, ContatoCategoria } from '@/types'
 
 @Options({
@@ -62,7 +44,8 @@ import { User, Role, Pessoa, Endereco, Cidade, Estado, Pais, Contato, ContatoTip
 	},
 	components: {
 		FormContato,
-		FormEndereco
+		FormEndereco,
+		FormDadosPessoa
 	}
 })
 export default class FormPessoa extends Basic {
@@ -96,6 +79,7 @@ export default class FormPessoa extends Basic {
 		    bairro: '',
 		    logradouro: '',
 		    numero: '',
+		    cep: '',
 		    complemento: '',
 		    cidade_id: 0,
 		    pessoa_id: 0,
@@ -117,29 +101,36 @@ export default class FormPessoa extends Basic {
 	    },
 	    contatos: []
 	}
-	fotoPreview = ''
+
+	$refs!: {
+	    formEndereco: FormEndereco
+	}
+
+  	getEstados(paisId: Number) {
+  		console.log("################ this.$refs.formEndereco")
+  		console.log(this.$refs.formEndereco)
+  		this.$refs.formEndereco!.getEstados(paisId)
+  	}
+
+	getCidades(estadoId: Number, search: String) {
+  		console.log("################ this.$refs.formEndereco")
+  		console.log(this.$refs.formEndereco)
+  		this.$refs.formEndereco!.getCidades(estadoId, search)
+  	}
 
 	newContato() {
 		this.pessoa.contatos!.push( JSON.parse(JSON.stringify(this.defaultContato)) )
 	}
 
-	setFotoPreview(file: File) {
-		this.fotoPreview = URL.createObjectURL(file)
+	removeContato(index: number) {
+		this.pessoa.contatos!.splice(index, 1)
 	}
 
-	changeFoto(event: Event) {
-		try {
-			this.pessoa.foto = (event.target! as HTMLInputElement).files![0] ?? ''
-			this.setFotoPreview( (event.target! as HTMLInputElement).files![0] )
-		} catch (err) {
-			console.log(err)
-		}
+	excluirContato(id: number) {
+		this.$emit('excluirContato', id)
 	}
 
 }
 </script>
 <style scoped>
-	.foto-preview-card {
-		min-height: 38px;
-	}
 </style>

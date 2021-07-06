@@ -45,6 +45,7 @@ export default class CreatePessoa extends Basic {
 		    bairro: '',
 		    logradouro: '',
 		    numero: '',
+		    cep: '',
 		    complemento: '',
 		    cidade_id: 0,
 		    pessoa_id: 0,

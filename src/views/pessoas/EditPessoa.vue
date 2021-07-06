@@ -10,7 +10,7 @@
 	    		<form @submit.prevent="updatePessoa()">
 	    			<div class="row">
 	    				<div class="col-12">
-	    					<FormPessoa v-model:pessoa="pessoa" />
+	    					<FormPessoa @excluirContato="excluirContato($event)" ref="formPessoa" v-model:pessoa="pessoa" />
 	    				</div>
 	    				<div class="col-12 mt-2">
 	    					<button class="btn btn-outline-primary">Salvar</button>
@@ -20,17 +20,24 @@
 	    	</div>
 	    </div>
 	</div>
+    <ConfirmationModal
+        :showModal="showConfirmationModal"
+        :question="confirmationQuestion"
+        @closeModal="closeConfirmationModal()"
+        @callback="confirmationCallback()"
+    />
 </template>
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component';
 import Basic from '@/views/Basic.vue'; // @ is an alias to /src
+import ConfirmationModal from '@/components/overlaid/ConfirmationModal.vue'; // @ is an alias to /src
 import FormPessoa from '@/components/forms/FormPessoa.vue'; // @ is an alias to /src
 import moment from 'moment';
-var Buffer = require('buffer/').Buffer
 import { User, Role, Pessoa, Endereco, Cidade, Estado, Pais, Contato, ContatoTipo, ContatoCategoria } from '@/types'
 
 @Options({
 	components: {
+        ConfirmationModal,
 		FormPessoa
 	}
 })
@@ -47,6 +54,7 @@ export default class EditPessoa extends Basic {
 		    bairro: '',
 		    logradouro: '',
 		    numero: '',
+		    cep: '',
 		    complemento: '',
 		    cidade_id: 0,
 		    pessoa_id: 0,
@@ -68,10 +76,22 @@ export default class EditPessoa extends Basic {
 	    },
 	    contatos: []
 	}
+    showConfirmationModal = false
+    confirmationQuestion = 'Deseja excluir permanentemente esse contato dessa pessoa?'
+
+	$refs!: {
+	    formPessoa: FormPessoa
+	}
 
 	mounted() {
+		this.getPesssoa()
+	}
+
+	getPesssoa() {
 		this.axiosInstance.get('/pessoa/' + this.$route.params.id).then( (response: any) => {
 			this.pessoa = this.format(response.data.pessoa)
+			this.$refs.formPessoa.getEstados(this.pessoa.endereco!.cidade!.estado!.pais!.id)
+			this.$refs.formPessoa.getCidades(this.pessoa.endereco!.cidade!.estado!.id, this.pessoa.endereco!.cidade!.nome)
 		}).catch( (err: any) => {
 			this.tratarErro(err)
 		})
@@ -80,7 +100,7 @@ export default class EditPessoa extends Basic {
 	format(data: Pessoa) {
 		data.data_nascimento = moment(data.data_nascimento).format('DD/MM/YYYY')
 		data.cpf = data.cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4')
-		data.foto = data.foto == '' ?? `data:image;base64,${Buffer.from(data.foto.data).toString('base64')}`
+		data.endereco!.cep = data.endereco!.cep.replace(/(\d{5})(\d{3})/, '$1-$2')
 		return data
 	}
 
@@ -88,12 +108,36 @@ export default class EditPessoa extends Basic {
 		var formData = new FormData()
 		formData.append('foto', this.pessoa.foto)
 		formData.append('pessoa', JSON.stringify(this.pessoa) )
-		this.axiosInstance.post('/pessoa', formData).then( (response: any) => {
+		this.axiosInstance.put('/pessoa/' + this.pessoa.id, formData).then( (response: any) => {
 			this.$router.push('/pessoas')
 		}).catch( (err: any) => {
 			this.tratarErro(err)
 		})
 	}
+
+    excluirContato(id: Number) {
+        this.confirmationCallback = () => {
+            this.showConfirmationModal = false
+            this.$emit('showCarregando')
+            this.axiosInstance.delete('/contato/' + id).then( (response: any) => {
+                this.$emit('hideCarregando')
+				this.getPesssoa()
+                this.$emit('showMessage', response.data.message)
+            }).catch( (err: any) => {
+                this.$emit('hideCarregando')
+                this.tratarErro(err)
+            })
+        }
+        this.showConfirmationModal = true
+    }
+
+    closeConfirmationModal() {
+        this.showConfirmationModal = false
+    }
+
+    confirmationCallback = () => {
+        console.log('')
+    }
 
 }
 

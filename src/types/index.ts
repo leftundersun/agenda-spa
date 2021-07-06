@@ -46,6 +46,7 @@ export interface Endereco {
     id: Number;
     bairro: String;
     logradouro: String;
+    cep: String;
     numero: String;
     complemento: String;
     cidade_id: Number;

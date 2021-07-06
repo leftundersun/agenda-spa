@@ -36,7 +36,7 @@
 		</div>
 		<div class="col-4">
 			<label for="cidade" class="form-label">Cidade</label>
-			<input type="text" @keyup="cidadeKeyUp($event)" class="form-control">
+			<input type="text" v-model="endereco.cidade.nome" @keyup="cidadeKeyUp($event)" class="form-control">
 			<select name="cidade" class="form-select" v-model="endereco.cidade.id">
 				<option v-if="cidades.length > 0" value="0">Selecione uma cidade</option>
 				<option v-for="cidade in cidades" :key="cidade.id" :value="cidade.id">{{ cidade.nome }}</option>
@@ -61,6 +61,7 @@ export default class FormEndereco extends Basic {
 	    bairro: '',
 	    logradouro: '',
 	    numero: '',
+	    cep: '',
 	    complemento: '',
 	    cidade_id: 0,
 	    pessoa_id: 0,
@@ -91,7 +92,7 @@ export default class FormEndereco extends Basic {
 	}
 
 	changePais() {
-		this.getEstados()
+		this.getEstados(this.endereco.cidade!.estado!.pais!.id)
 	}
 
 	cidadeKeyUp(event: Event) {
@@ -102,7 +103,7 @@ export default class FormEndereco extends Basic {
 			if (search != this.cidadeLastSearch) {
 				this.cidadeLastSearch = search
 				if (this.endereco.cidade!.estado!.id > 0) {
-					this.getCidades(search)
+					this.getCidades(this.endereco.cidade!.estado!.id, search)
 				}
 			}
 		}
@@ -116,16 +117,18 @@ export default class FormEndereco extends Basic {
 		})
 	}
 
-	getEstados() {
-		this.axiosInstance.get('/resources/estados/' + this.endereco.cidade!.estado!.pais!.id).then( (response: any) => {
+	getEstados(paisId: Number) {
+		console.log('############# paisId')
+		console.log(paisId)
+		this.axiosInstance.get('/resources/estados/' + paisId).then( (response: any) => {
 			this.estados = response.data.estados
 		}).catch( (err: any) => {
 			this.tratarErro(err)
 		})
 	}
 
-	getCidades(search: string) {
-		this.axiosInstance.get('/resources/cidades/' + this.endereco.cidade!.estado!.id + '?search=' + search).then( (response: any) => {
+	getCidades(estadoId: Number, search: String) {
+		this.axiosInstance.get('/resources/cidades/' + estadoId + '?search=' + search).then( (response: any) => {
 			this.cidades = response.data.cidades
 		}).catch( (err: any) => {
 			this.tratarErro(err)

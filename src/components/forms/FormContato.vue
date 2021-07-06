@@ -1,14 +1,38 @@
 <template>
 	<div class="card mt-2">
 		<div class="row g-3">
-			<div class="col-6">
+			<div v-if="contato.id > 0" class="col-12">
+				<div class="row">
+					<div class="col-8">
+						<h4 class="text-info mb-0">#{{ contato.id }}</h4>
+					</div>
+					<div class="col-4">
+						<button type="button" @click="excluirContato()" class="btn btn-outline-danger float-end">
+							Excluir
+						</button>
+					</div>
+				</div>
+			</div>
+			<div v-else class="col-12">
+				<div class="row">
+					<div class="col-8">
+						<h4 class="text-info">Novo contato</h4>
+					</div>
+					<div class="col-4">
+						<button type="button" @click="removeContato()" class="btn btn-outline-danger float-end">
+							Remover
+						</button>
+					</div>
+				</div>
+			</div>
+			<div class="col-6 mt-0">
 				<label for="tipo" class="form-label">Tipo</label>
-				<select @change="changeTipo($event)" name="tipo" class="form-select" v-model="contato.contatoTipo.id">
+				<select name="tipo" class="form-select" v-model="contato.contatoTipo.id">
 					<option value="0">Selecione o tipo</option>
 					<option v-for="tipo in tipos" :key="tipo.id" :value="tipo.id">{{ tipo.descricao }}</option>
 				</select>
 			</div>
-			<div class="col-6">
+			<div class="col-6 mt-0">
 				<label for="categoria" class="form-label">Categoria</label>
 				<select name="categoria" class="form-select" v-model="contato.contatoCategoria.id">
 					<option value="0">Selecione um categoria</option>
@@ -32,16 +56,19 @@
 </template>
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component';
+import { getCurrentInstance} from "vue";
 import Basic from '@/views/Basic.vue'; // @ is an alias to /src
 import { User, Role, Pessoa, Endereco, Cidade, Estado, Pais, Contato, ContatoTipo, ContatoCategoria } from '@/types'
 
 @Options({
 	props: {
-		contato: Object
+		contato: Object,
+		index: Number
 	}
 })
 export default class FormContato extends Basic {
 
+	index: Number = 0
 	contato: Contato = {
 	    id: 0,
 	    valor: '',
@@ -64,33 +91,39 @@ export default class FormContato extends Basic {
 	get isntTipoSelected() {
 		return this.contato.contatoTipo!.id == 0
 	}
+	get valueMask() {
+		switch (this.contato.contatoTipo!.id) {
+			case 1:
+				return '+55 (##) ##### ####'
+				break;
+			case 2:
+				return '+55 (##) #### ####'
+				break;
+			case 3:
+				return '#*'
+				break;
+			default:
+				this.contato.valor = ''
+				return 'Selecione o tipo'
+				break;
+		}
+	}
 
-	valueMask: any = '#*'
+	removeContato() {
+		console.log('########### this.index')
+		console.log(this.index)
+		this.$emit('removeContato', this.index)
+	}
+
+	excluirContato() {
+		this.$emit('excluirContato', this.contato.id)
+	}
 
 	mounted() {
 		this.getTipos()
 		this.getCategorias()
 	}
 
-	changeTipo() {
-		switch (this.contato.contatoTipo!.id) {
-			case 1:
-				this.contato.valor = ''
-				this.valueMask = '+55 (##) ##### ####'
-				break;
-			case 2:
-				this.contato.valor = ''
-				this.valueMask = '+55 (##) #### ####'
-				break;
-			case 3:
-				this.contato.valor = ''
-				this.valueMask = '#*'
-				break;
-			default:
-				this.valueMask = ''
-				break;
-		}
-	}
 
 	getTipos() {
 		this.axiosInstance.get('/resources/contato-tipos').then( (response: any) => {
