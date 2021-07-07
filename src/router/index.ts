@@ -18,23 +18,33 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: '/pessoas',
-        name: 'Pessoas',
+        name: 'ListPessoas',
         component: () => import(/* webpackChunkName: "pessoasList" */ '../views/pessoas/ListPessoas.vue')
       },
       {
         path: '/pessoa/create',
-        name: 'Create',
+        name: 'CreatePessoa',
         component: () => import(/* webpackChunkName: "pessoaCreate" */ '../views/pessoas/CreatePessoa.vue')
       },
       {
         path: '/pessoa/edit/:id',
-        name: 'Edit',
+        name: 'EditPessoa',
         component: () => import(/* webpackChunkName: "pessoaEdit" */ '../views/pessoas/EditPessoa.vue')
       },
       {
         path: '/contatos',
-        name: 'Contatos',
+        name: 'ListContatos',
         component: () => import(/* webpackChunkName: "contatosList" */ '../views/contatos/ListContatos.vue')
+      },
+      {
+        path: '/contato/create',
+        name: 'CreateContato',
+        component: () => import(/* webpackChunkName: "contatoCreate" */ '../views/contatos/CreateContato.vue')
+      },
+      {
+        path: '/contato/edit/:id',
+        name: 'EditContato',
+        component: () => import(/* webpackChunkName: "contatoEdit" */ '../views/contatos/EditContato.vue')
       },
       {
         path: '/about',

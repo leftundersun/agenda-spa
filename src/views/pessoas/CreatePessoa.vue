@@ -1,9 +1,9 @@
 <template>
   	<div class="card large-margin-bottom">
 	    <div class="row">
-	      <div class="col-12">
-	        <h4>Cadastrar uma nova pessoa</h4>
-	      </div>
+	      	<div class="col-12">
+	        	<h4>Cadastrar uma nova pessoa</h4>
+	      	</div>
 	    </div>
 	    <div class="row">
 	    	<div class="col-12">
