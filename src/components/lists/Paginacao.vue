@@ -39,7 +39,7 @@ export default class Paginacao extends Vue {
 	totalCount = 0
 	selectedPage = 1
 	get first() {
-		return ( (this.selectedPage - 1) * this.perPage ) + 1
+		return this.totalCount > 0 ? ( (this.selectedPage - 1) * this.perPage ) + 1 : 0
 	}
 	get last() {
 		return (this.selectedPage < this.pageQtd) ? (this.selectedPage * this.perPage) : this.totalCount

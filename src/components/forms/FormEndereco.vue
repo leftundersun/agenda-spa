@@ -2,42 +2,42 @@
 	<div class="row g-3">
 		<div class="col-6">
 			<label for="bairro" class="form-label">Bairro</label>
-			<input name="bairro" v-model="endereco.bairro" type="text" class="form-control">
+			<input name="bairro" v-model="endereco.bairro" type="text" class="form-control" :disabled="readonly">
 		</div>
 		<div class="col-6">
 			<label for="logradouro" class="form-label">Logadouro</label>
-			<input name="logradouro" v-model="endereco.logradouro" type="text" class="form-control">
+			<input name="logradouro" v-model="endereco.logradouro" type="text" class="form-control" :disabled="readonly">
 		</div>
 		<div class="col-4">
 			<label for="numero" class="form-label">Número</label>
-			<input name="numero" v-model="endereco.numero" type="text" class="form-control">
+			<input name="numero" v-model="endereco.numero" type="text" class="form-control" :disabled="readonly">
 		</div>
 		<div class="col-4">
 			<label for="complemento" class="form-label">Complemento</label>
-			<input name="complemento" class="form-control" v-model="endereco.complemento" type="text">
+			<input name="complemento" class="form-control" v-model="endereco.complemento" type="text" :disabled="readonly">
 		</div>
 		<div class="col-4">
 			<label for="cep" class="form-label">CEP</label>
-			<input name="cep" v-maska="'#####-###'" class="form-control" v-model="endereco.cep" type="text">
+			<input name="cep" v-maska="'#####-###'" class="form-control" v-model="endereco.cep" type="text" :disabled="readonly">
 		</div>
 		<div class="col-4">
 			<label for="pais" class="form-label">País</label>
-			<select @change="changePais()" name="pais" class="form-select" v-model="endereco.cidade.estado.pais.id">
+			<select @change="changePais()" name="pais" class="form-select" v-model="endereco.cidade.estado.pais.id" :disabled="readonly">
 				<option value="0">Selecione um país</option>
 				<option v-for="pais in paises" :key="pais.id" :value="pais.id">{{ pais.nome }}</option>
 			</select>
 		</div>
 		<div class="col-4">
 			<label for="estado" class="form-label">Estado</label>
-			<select name="estado" class="form-select" v-model="endereco.cidade.estado.id">
+			<select name="estado" class="form-select" v-model="endereco.cidade.estado.id" :disabled="readonly">
 				<option v-if="estados.length > 0" value="0">Selecione um estado</option>
 				<option v-for="estado in estados" :key="estado.id" :value="estado.id">{{ estado.nome }}</option>
 			</select>
 		</div>
 		<div class="col-4">
 			<label for="cidade" class="form-label">Cidade</label>
-			<input type="text" v-model="endereco.cidade.nome" @keyup="cidadeKeyUp($event)" class="form-control">
-			<select name="cidade" class="form-select" v-model="endereco.cidade.id">
+			<input type="text" v-model="endereco.cidade.nome" @keyup="cidadeKeyUp($event)" class="form-control" :disabled="readonly">
+			<select name="cidade" class="form-select" v-model="endereco.cidade.id" :disabled="readonly">
 				<option v-if="cidades.length > 0" value="0">Selecione uma cidade</option>
 				<option v-for="cidade in cidades" :key="cidade.id" :value="cidade.id">{{ cidade.nome }}</option>
 			</select>
@@ -51,10 +51,13 @@ import { User, Role, Pessoa, Endereco, Cidade, Estado, Pais, Contato, ContatoTip
 
 @Options({
 	props: {
-		endereco: Object
+		endereco: Object,
+		readonly: Boolean
 	}
 })
 export default class FormEndereco extends Basic {
+
+	readonly: Boolean = false
 
 	endereco: Endereco = {
     	id: 0,

@@ -9,7 +9,7 @@
 </template>
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component';
-import LoadingModal from '@/components/overlaid/LoadingModal.vue'; // @ is an alias to /src
+import LoadingModal from '@/components/overlaid/modals/LoadingModal.vue'; // @ is an alias to /src
 import Alert from '@/components/overlaid/Alert.vue'; // @ is an alias to /src
 
 @Options({

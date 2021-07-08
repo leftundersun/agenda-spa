@@ -2,19 +2,19 @@
 	<div class="row g-3">
 		<div class="col-4">
 			<label for="nome" class="form-label">Nome</label>
-			<input name="nome" v-model="pessoa.nome" type="text" class="form-control">
+			<input name="nome" v-model="pessoa.nome" type="text" class="form-control" :disabled="readonly">
 		</div>
 		<div class="col-4">
 			<label for="cpf" class="form-label">CPF</label>
-			<input name="cpf" v-maska="'###.###.###-##'" v-model="pessoa.cpf" type="text" class="form-control">
+			<input name="cpf" v-maska="'###.###.###-##'" v-model="pessoa.cpf" type="text" class="form-control" :disabled="readonly">
 		</div>
 		<div class="col-4">
 			<label for="data_nascimento" class="form-label">Data de nascimento</label>
-			<input name="data_nascimento" v-maska="'##/##/####'" v-model="pessoa.data_nascimento" type="text" class="form-control">
+			<input name="data_nascimento" v-maska="'##/##/####'" v-model="pessoa.data_nascimento" type="text" class="form-control" :disabled="readonly">
 		</div>
 		<div class="col-6">
 			<label for="foto" class="form-label">Foto</label><br>
-			<input name="foto" @change="changeFoto($event)" type="file" accept=".png, .jpg, .jpeg">
+			<input name="foto" @change="changeFoto($event)" type="file" accept=".png, .jpg, .jpeg" :disabled="readonly">
 		</div>
 		<div class="col-6">
 			<label class="form-label">Preview</label>
@@ -32,10 +32,13 @@ import { User, Role, Pessoa, Endereco, Cidade, Estado, Pais, Contato, ContatoTip
 
 @Options({
 	props: {
-		pessoa: Object
+		pessoa: Object,
+		readonly: Boolean
 	}
 })
 export default class FormDadosPessoa extends Basic {
+
+	readonly: Boolean = false
 
 	pessoa: Pessoa = {
 		id: 0,

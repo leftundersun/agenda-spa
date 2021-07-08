@@ -17,6 +17,21 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import(/* webpackChunkName: "home" */ '../views/Home.vue')
       },
       {
+        path: '/users',
+        name: 'ListUsers',
+        component: () => import(/* webpackChunkName: "usersList" */ '../views/users/ListUsers.vue')
+      },
+      {
+        path: '/user/create',
+        name: 'CreateUser',
+        component: () => import(/* webpackChunkName: "userCreate" */ '../views/users/CreateUser.vue')
+      },
+      {
+        path: '/user/edit/:id',
+        name: 'EditUser',
+        component: () => import(/* webpackChunkName: "userEdit" */ '../views/users/EditUser.vue')
+      },
+      {
         path: '/pessoas',
         name: 'ListPessoas',
         component: () => import(/* webpackChunkName: "pessoasList" */ '../views/pessoas/ListPessoas.vue')
@@ -45,14 +60,6 @@ const routes: Array<RouteRecordRaw> = [
         path: '/contato/edit/:id',
         name: 'EditContato',
         component: () => import(/* webpackChunkName: "contatoEdit" */ '../views/contatos/EditContato.vue')
-      },
-      {
-        path: '/about',
-        name: 'About',
-        // route level code-splitting
-        // this generates a separate chunk (about.[hash].js) for this route
-        // which is lazy-loaded when the route is visited.
-        component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
       }
     ]
   },

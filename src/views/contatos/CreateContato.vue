@@ -37,6 +37,7 @@
 import { Options, Vue } from 'vue-class-component';
 import Basic from '@/views/Basic.vue'; // @ is an alias to /src
 import FormContatoFields from '@/components/forms/FormContatoFields.vue'; // @ is an alias to /src
+import { User, Role, Pessoa, Endereco, Cidade, Estado, Pais, Contato, ContatoTipo, ContatoCategoria } from '@/types'
     
 @Options({
     components: {

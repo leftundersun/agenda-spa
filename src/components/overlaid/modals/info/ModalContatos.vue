@@ -21,7 +21,7 @@
                         </div>
                     </div>
                     <div v-else class="card">
-                        <h5>Nenhum contato para exibir</h5>
+                        <h5 class="text-center mb-0">Nenhum contato para exibir</h5>
                     </div>
                 </div>
             </div>

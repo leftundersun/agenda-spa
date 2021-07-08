@@ -30,7 +30,7 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component';
 import Basic from '@/views/Basic.vue'; // @ is an alias to /src
-import ConfirmationModal from '@/components/overlaid/ConfirmationModal.vue'; // @ is an alias to /src
+import ConfirmationModal from '@/components/overlaid/modals/ConfirmationModal.vue'; // @ is an alias to /src
 import FormPessoa from '@/components/forms/FormPessoa.vue'; // @ is an alias to /src
 import moment from 'moment';
 import { User, Role, Pessoa, Endereco, Cidade, Estado, Pais, Contato, ContatoTipo, ContatoCategoria } from '@/types'

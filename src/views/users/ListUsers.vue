@@ -2,10 +2,10 @@
     <div class="card">
         <div class="row">
             <div class="col-6">
-                <h4>Contatos</h4>
+                <h4>Users</h4>
             </div>
             <div class="col-6">
-                <router-link to="/contato/create" class="btn btn-outline-primary float-end">Criar contato</router-link>
+                <router-link to="/user/create" class="btn btn-outline-primary float-end">Criar usuário</router-link>
             </div>
         </div>
         <Paginacao
@@ -14,17 +14,15 @@
             @selectPage="selectPage($event)"
             @search="searchChange($event)"
         />
-        <div v-if="contatos.length > 0" class="row">
-            <ContatoCard
-                @addToFavoritos="addToFavoritos($event)"
-                @removeFromFavoritos="removeFromFavoritos($event)"
+        <div v-if="users.length > 0" class="row">
+            <UserCard
                 @showMessage="showMessage($event)"
-                @showInfo="setContatoModal($event)"
-                @excluirContato="excluirContato($event)"
-                @editarContato="editarContato($event)"
-                v-for="contato in contatos"
-                :contato="contato"
-                :key="contato.id"/>
+                @showInfo="setUserModal($event)"
+                @excluirUser="excluirUser($event)"
+                @editarUser="editarUser($event)"
+                v-for="user in users"
+                :user="user"
+                :key="user.id"/>
         </div>
         <div v-else class="row">
             <div class="col-12">
@@ -40,76 +38,77 @@
         @closeModal="closeConfirmationModal()"
         @callback="confirmationCallback()"
     />
-    <ModalContatoInfo @closeModal="closeModal" :showModal="showModalContatoInfo" :contato="contatoModal" />
+    <ModalUserInfo @closeModal="closeModal" :showModal="showModalUserInfo" :user="userModal" />
 </template>
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component';
 import Basic from '@/views/Basic.vue'; // @ is an alias to /src
-import ContatoCard from '@/components/lists/items/ContatoCard.vue'; // @ is an alias to /src
+import UserCard from '@/components/lists/items/UserCard.vue'; // @ is an alias to /src
 import Paginacao from '@/components/lists/Paginacao.vue'; // @ is an alias to /src
 import ConfirmationModal from '@/components/overlaid/modals/ConfirmationModal.vue'; // @ is an alias to /src
-import ModalContatoInfo from '@/components/overlaid/modals/info/ModalContatoInfo.vue'; // @ is an alias to /src
+import ModalUserInfo from '@/components/overlaid/modals/info/ModalUserInfo.vue'; // @ is an alias to /src
 import { User, Role, Pessoa, Endereco, Cidade, Estado, Pais, Contato, ContatoTipo, ContatoCategoria } from '@/types'
 
 @Options({
     components: {
-        ContatoCard,
+        UserCard,
         ConfirmationModal,
         Paginacao,
-        ModalContatoInfo
+        ModalUserInfo
     }
 })
-export default class ListContatos extends Basic {
+export default class ListUsers extends Basic {
 
-    contatoModal: Contato = {
+    userModal: User = {
         id: 0,
-        valor: '',
-        publico: false,
+        username: '',
         pessoa_id: 0,
         pessoa: {
             id: 0,
             nome: '',
             cpf: '',
             data_nascimento: '',
-            foto: ''
-        },
-        user_id: 0,
-        user: {
-            id: 0,
-            username: '',
-            pessoa_id: 0,
-            pessoa: {   
+            foto: '',
+            endereco: {
                 id: 0,
-                nome: '',
-                cpf: '',
-                data_nascimento: '',
-                foto: '',
+                bairro: '',
+                logradouro: '',
+                numero: '',
+                cep: '',
+                complemento: '',
+                cidade_id: 0,
+                pessoa_id: 0,
+                cidade: {
+                    id: 0,
+                    nome: '',
+                    estado_id: 0,
+                    estado: {
+                        id: 0,
+                        nome: '',
+                        uf: '',
+                        pais_id: 0,
+                        pais: {
+                            id: 0,
+                            nome: ''
+                        }
+                    }
+                }
             }
-        },
-        contato_tipo_id: 0,
-        contatoTipo: {
-            id: 0,
-            descricao: ''
-        },
-        contato_categoria_id: 0,
-        contatoCategoria: {
-            id: 0,
-            descricao: ''
         }
     }
-    showModalContatoInfo = false
+    showModalUserInfo = false
 
-    contatos: Array<Pessoa> = []
+    users: Array<User> = []
 
     totalCount = 0
     selectedPage = 1
     search = ''
 
     showConfirmationModal = false
-    confirmationQuestion = 'Deseja excluir permanentemente esse contato?'
+    confirmationQuestion = 'Deseja excluir permanentemente esse usuário?'
 
     closeModal() {
-        this.showModalContatoInfo = false
+        this.showModalUserInfo = false
     }
 
     showMessage(event: string) {
@@ -117,19 +116,19 @@ export default class ListContatos extends Basic {
     }
 
     mounted() {
-        this.searchContatos()
+        this.searchUsers()
     }
 
-    searchContatos() {
+    searchUsers() {
         this.$emit('showCarregando')
-        var url = '/contato/list?'
+        var url = '/user/list?'
         if (this.search.length > 2) {
             url += 'search=' + this.search + '&'
         }
         url += 'page=' + this.selectedPage
         this.axiosInstance.get(url).then( (response: any) => {
             this.$emit('hideCarregando')
-            this.contatos = response.data.contatos
+            this.users = response.data.users
             this.totalCount = response.data.totalCount
         }).catch( (err: any) => {
             this.$emit('hideCarregando')
@@ -139,7 +138,7 @@ export default class ListContatos extends Basic {
 
     selectPage(page: number) {
         this.selectedPage = page
-        this.searchContatos()
+        this.searchUsers()
     }
 
     searchChange(search: string) {
@@ -147,21 +146,21 @@ export default class ListContatos extends Basic {
         if (search != this.search) {
             this.selectedPage = 1
             this.search = search
-            this.searchContatos()
+            this.searchUsers()
         }
     }
 
-    editarContato(id: Number) {
-        this.$router.push('/contato/edit/' + id)
+    editarUser(id: Number) {
+        this.$router.push('/user/edit/' + id)
     }
 
-    excluirContato(id: Number) {
+    excluirUser(id: Number) {
         this.confirmationCallback = () => {
             this.showConfirmationModal = false
             this.$emit('showCarregando')
-            this.axiosInstance.delete('/contato/' + id).then( (response: any) => {
+            this.axiosInstance.delete('/user/' + id).then( (response: any) => {
                 this.$emit('hideCarregando')
-                this.searchContatos()
+                this.searchUsers()
                 this.$emit('showMessage', response.data.message)
             }).catch( (err: any) => {
                 this.$emit('hideCarregando')
@@ -169,23 +168,6 @@ export default class ListContatos extends Basic {
             })
         }
         this.showConfirmationModal = true
-    }
-
-    addToFavoritos(contatoId: Number) {
-        this.axiosInstance.put('/favoritos/' + contatoId).then( (response: any) => {
-            this.searchContatos()
-            this.$emit('showMessage', response.data.message)
-        }).catch( (err: any) => {
-            this.tratarErro(err)
-        })
-    }
-    removeFromFavoritos(contatoId: Number) {
-        this.axiosInstance.delete('/favoritos/' + contatoId).then( (response: any) => {
-            this.searchContatos()
-            this.$emit('showMessage', response.data.message)
-        }).catch( (err: any) => {
-            this.tratarErro(err)
-        })
     }
 
     closeConfirmationModal() {
@@ -196,11 +178,13 @@ export default class ListContatos extends Basic {
         console.log('')
     }
 
-    setContatoModal(contato: Contato) {
-        this.contatoModal = contato
-        this.showModalContatoInfo = true
+    setUserModal(user: User) {
+        this.userModal = user
+        this.showModalUserInfo = true
     }
 
 }
+
 </script>
-<style scoped></style>
+<style scoped>
+</style>

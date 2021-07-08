@@ -55,7 +55,7 @@ export default class ContatoCard extends Basic {
     }
 
 	get foto() {
-		return this.contato.pessoa.foto != '' ? `data:image;base64,${Buffer.from(this.contato.pessoa.foto.data).toString('base64')}` : require('@/assets/user-default.jpeg')
+		return this.contato.pessoa!.foto != '' ? `data:image;base64,${Buffer.from(this.contato.pessoa!.foto.data).toString('base64')}` : require('@/assets/user-default.jpeg')
 	}
 
 	showInfo() {

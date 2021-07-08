@@ -5,12 +5,19 @@
         <h4>Favoritos</h4>
       </div>
     </div>
-    <div class="row">
+    <div v-if="user.favoritos.length > 0" class="row">
       <FavoritoCard
         @showContatos="setContatosModal($event)"
         v-for="favorito in user.favoritos"
         :favorito="favorito"
         :key="favorito.id"/>
+    </div>
+    <div v-else class="row">
+      <div class="col-12">
+        <div class="card">
+          <h6 class="text-center mb-0">Nenhum contato favorito</h6>
+        </div>
+      </div>
     </div>
   </div>
   <ModalContatos @closeModal="closeModal" :showModal="showModal" :pessoa="pessoaModal" />
@@ -18,14 +25,12 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component';
 import Basic from '@/views/Basic.vue'; // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
 import FavoritoCard from '@/components/lists/items/FavoritoCard.vue'; // @ is an alias to /src
-import ModalContatos from '@/components/overlaid/ModalContatos.vue'; // @ is an alias to /src
+import ModalContatos from '@/components/overlaid/modals/info/ModalContatos.vue'; // @ is an alias to /src
 import { User, Role, Pessoa, Endereco, Cidade, Estado, Pais, Contato, ContatoTipo, ContatoCategoria } from '@/types'
 
 @Options({
   components: {
-    HelloWorld,
     FavoritoCard,
     ModalContatos
   },

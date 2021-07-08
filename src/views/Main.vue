@@ -1,11 +1,9 @@
 <template>
 	<nav class="navbar navbar-expand-lg navbar-light bg-secondary" style="padding: 5px 10px;">
 		<router-link to="/" class="btn btn-secondary">Home</router-link>
+		<router-link to="/users" class="btn btn-secondary">Usuários</router-link>
 		<router-link to="/pessoas" class="btn btn-secondary">Pessoas</router-link>
 		<router-link to="/contatos" class="btn btn-secondary">Contatos</router-link>
-		<!--
-		<router-link to="/users" class="btn btn-secondary">Usuários</router-link>
-		-->
 		<button @click="logoff()" class="btn btn-secondary">Logoff</button>
   	</nav>
   	<div class="container">
