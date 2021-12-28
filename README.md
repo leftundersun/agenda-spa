@@ -1,24 +1,14 @@
-# spa
+# SPA Vue.js
 
-## Project setup
-```
-npm install
-```
+## Visão geral
+Essa SPA Vue é um exemplo
 
-### Compiles and hot-reloads for development
+### Rodar em modo de desenvolvimento
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
+### Compilar para modo de produção
 ```
 npm run build
 ```
-
-### Run your unit tests
-```
-npm run test:unit
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).

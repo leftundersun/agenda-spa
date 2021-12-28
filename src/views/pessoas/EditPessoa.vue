@@ -37,7 +37,7 @@ import { User, Role, Pessoa, Endereco, Cidade, Estado, Pais, Contato, ContatoTip
 
 @Options({
   components: {
-        ConfirmationModal,
+    ConfirmationModal,
     FormPessoa
   }
 })

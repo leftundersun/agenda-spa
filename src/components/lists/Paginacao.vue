@@ -15,7 +15,7 @@
           <button @click="lastPage()" class="btn btn-secondary">Última</button>
         </div>
         <div class="col-12">
-          <span>Mostrando de {{ first }} até {{ last }} de {{ totalCount }} resultados</span>
+          <span>Mostrando de {{ firstItem }} até {{ lastItem }} de {{ totalCount }} resultados</span>
         </div>
       </div>
     </div>
@@ -39,11 +39,11 @@ export default class Paginacao extends Vue {
   totalCount = 0
   selectedPage = 1
 
-  get first() {
+  get firstItem() {
     return this.totalCount > 0 ? ( (this.selectedPage - 1) * this.perPage ) + 1 : 0
   }
 
-  get last() {
+  get lastItem() {
     return (this.selectedPage < this.pageQtd) ? (this.selectedPage * this.perPage) : this.totalCount
   }
 
