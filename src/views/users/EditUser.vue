@@ -85,17 +85,17 @@ export default class CreateUser extends Basic {
   getUser() {
     this.axiosInstance.get('/user/' + this.$route.params.id).then( (response: any) => {
       this.user = this.format(response.data.user)
-      this.$refs.formUser.getEstados(this.user.pessoa.endereco!.cidade!.estado!.pais!.id)
-      this.$refs.formUser.getCidades(this.user.pessoa.endereco!.cidade!.estado!.id, this.user.pessoa.endereco!.cidade!.nome)
+      this.$refs.formUser.getEstados(this.user.pessoa!.endereco!.cidade!.estado!.pais!.id)
+      this.$refs.formUser.getCidades(this.user.pessoa!.endereco!.cidade!.estado!.id, this.user.pessoa!.endereco!.cidade!.nome)
     }).catch( (err: any) => {
       this.tratarErro(err)
     })
   }
 
   format(data: User) {
-    data.pessoa.data_nascimento = moment(data.pessoa.data_nascimento).format('DD/MM/YYYY')
-    data.pessoa.cpf = data.pessoa.cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4')
-    data.pessoa.endereco!.cep = data.pessoa.endereco!.cep.replace(/(\d{5})(\d{3})/, '$1-$2')
+    data.pessoa!.data_nascimento = moment(data.pessoa!.data_nascimento).format('DD/MM/YYYY')
+    data.pessoa!.cpf = data.pessoa!.cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4')
+    data.pessoa!.endereco!.cep = data.pessoa!.endereco!.cep.replace(/(\d{5})(\d{3})/, '$1-$2')
     return data
   }
 
