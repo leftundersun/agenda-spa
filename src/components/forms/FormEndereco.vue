@@ -36,7 +36,7 @@
     </div>
     <div class="col-4">
       <label for="cidade" class="form-label">Cidade</label>
-      <input type="text" v-model="endereco.cidade.nome" @keyup="cidadeKeyUp($event)" class="form-control" :disabled="readonly">
+      <input type="text" v-model="endereco.cidade.nome" @keyup="cidadeKeyUp($event)" class="form-control" placeholder="Digite o nome da cidade" :disabled="readonly">
       <select name="cidade" class="form-select" v-model="endereco.cidade.id" :disabled="readonly">
         <option v-if="cidades.length > 0" value="0">Selecione uma cidade</option>
         <option v-for="cidade in cidades" :key="cidade.id" :value="cidade.id">{{ cidade.nome }}</option>
