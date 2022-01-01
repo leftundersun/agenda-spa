@@ -5,7 +5,7 @@
       <input name="bairro" v-model="endereco.bairro" type="text" class="form-control" :disabled="readonly">
     </div>
     <div class="col-6">
-      <label for="logradouro" class="form-label">Logadouro</label>
+      <label for="logradouro" class="form-label">Logradouro</label>
       <input name="logradouro" v-model="endereco.logradouro" type="text" class="form-control" :disabled="readonly">
     </div>
     <div class="col-4">
