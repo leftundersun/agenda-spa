@@ -30,7 +30,7 @@
   <div class="card mt-2">
     <h5 class="text-info">Pessoa</h5>
     <div class="row g-3 mb-3">
-      <div class="col-4">
+      <div class="col-4" v-if="user.id == 0" >
         <label for="pessoa" class="form-label">Cadastrar esse usuário para</label>
         <input type="text" v-model="user.pessoa.nome" @keyup="pessoaKeyUp($event)" class="form-control">
         <select @change="selectPessoa($event)" name="pessoa" class="form-select" v-model="user.pessoa.id">
