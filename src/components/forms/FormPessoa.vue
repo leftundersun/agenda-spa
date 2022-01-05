@@ -107,14 +107,10 @@ export default class FormPessoa extends Basic {
   }
 
   getEstados(paisId: Number) {
-    console.log("################ this.$refs.formEndereco")
-    console.log(this.$refs.formEndereco)
     this.$refs.formEndereco!.getEstados(paisId)
   }
 
   getCidades(estadoId: Number, search: String) {
-    console.log("################ this.$refs.formEndereco")
-    console.log(this.$refs.formEndereco)
     this.$refs.formEndereco!.getCidades(estadoId, search)
   }
 

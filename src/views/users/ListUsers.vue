@@ -142,7 +142,6 @@ export default class ListUsers extends Basic {
   }
 
   searchChange(search: string) {
-    console.log()
     if (search != this.search) {
       this.selectedPage = 1
       this.search = search

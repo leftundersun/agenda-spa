@@ -121,8 +121,6 @@ export default class FormEndereco extends Basic {
   }
 
   getEstados(paisId: Number) {
-    console.log('############# paisId')
-    console.log(paisId)
     this.axiosInstance.get('/resources/estados/' + paisId).then( (response: any) => {
       this.estados = response.data.estados
     }).catch( (err: any) => {

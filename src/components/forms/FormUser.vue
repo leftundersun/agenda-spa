@@ -138,13 +138,9 @@ export default class FormUser extends Basic {
 
   changePessoa(pessoaId: number) {
     if (pessoaId > 0) {
-      console.log('###### pessoaId')
-      console.log(pessoaId)
       var filterResult = this.pessoas.filter( (item) => {
         return item.id == pessoaId
       })
-      console.log('###### filterResult')
-      console.log(filterResult)
       this.user.pessoa = this.format(filterResult[0])
       this.getEstados(this.user.pessoa!.endereco!.cidade!.estado!.pais!.id)
       this.getCidades(this.user.pessoa!.endereco!.cidade!.estado!.id, this.user.pessoa!.endereco!.cidade!.nome)
@@ -191,14 +187,10 @@ export default class FormUser extends Basic {
   }
 
   getEstados(paisId: Number) {
-    console.log("################ this.$refs.formEndereco")
-    console.log(this.$refs.formEndereco)
     this.$refs.formEndereco!.getEstados(paisId)
   }
 
   getCidades(estadoId: Number, search: String) {
-    console.log("################ this.$refs.formEndereco")
-    console.log(this.$refs.formEndereco)
     this.$refs.formEndereco!.getCidades(estadoId, search)
   }
 

@@ -57,8 +57,6 @@ export default class Login extends Basic {
         'authorization': 'Basic ' + btoa( this.credentials.user.trim() + ':' + this.credentials.pass.trim())
       }
     }).then( (response: any) => {
-      console.log('############## response')
-      console.log(response)
       if (this.salvarLogin) {
         localStorage.setItem('username', this.credentials.user)
         localStorage.setItem('password', this.credentials.pass)
@@ -69,9 +67,6 @@ export default class Login extends Basic {
     }).catch( (err: any) => {
       localStorage.removeItem('username')
       localStorage.removeItem('password')
-      console.log('############## err')
-      console.log(err)
-      console.log(err.response)
       this.$emit('showMessage', err.response.data.message ?? 'Erro')
     })
   }

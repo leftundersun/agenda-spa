@@ -119,15 +119,9 @@ export default class ListPessoas extends Basic {
     this.$emit('showCarregando')
     var url = '/pessoa/list?'
     if (this.search.length > 2) {
-      //options.params.search = this.search
       url += 'search=' + this.search + '&'
     }
     url += 'page=' + this.selectedPage
-    /*var options: any = {
-      params: {
-        page: this.selectedPage
-      }
-    }*/
     this.axiosInstance.get(url).then( (response: any) => {
       this.$emit('hideCarregando')
       this.pessoas = response.data.pessoas

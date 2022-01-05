@@ -30,6 +30,9 @@ import ModalContatos from '@/components/overlaid/modals/info/ModalContatos.vue';
 import { User, Role, Pessoa, Endereco, Cidade, Estado, Pais, Contato, ContatoTipo, ContatoCategoria } from '@/types'
 
 @Options({
+  props: {
+    user: Object
+  },
   components: {
     FavoritoCard,
     ModalContatos
@@ -53,16 +56,6 @@ export default class Home extends Basic {
     contatos: []
   }
   showModal = false
-
-  mounted() {
-    this.axiosInstance.get('/user').then( (response: any) => {
-      console.log('########## response')
-      console.log(response)
-      this.user = response.data.user
-    }).catch( (err: any) => {
-      this.tratarErro(err)
-    })
-  }
 
   setContatosModal(pessoa: Pessoa) {
     this.pessoaModal = pessoa

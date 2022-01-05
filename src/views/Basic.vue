@@ -19,10 +19,6 @@ export default class Basic extends Vue {
   }
 
   tratarErro(err: any) {
-    console.log('############# err')
-    console.log(err)
-    console.log('############# err.response')
-    console.log(err.response)
     if (err.response.status == 401) {
       this.$router.replace('/login')
     } else {

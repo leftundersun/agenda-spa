@@ -33,7 +33,6 @@ export default class App extends Vue {
   }
 
   showMessage(message: string) {
-    console.log('############## app showMessage')
     this.alertMessage = message
     this.openAlert()
   }
