@@ -8,8 +8,8 @@ export interface User {
 }
 
 export interface Role {
-    id: Number;
-    descricao: String;
+  id: Number;
+  descricao: String;
 }
 
 export interface Pessoa {
