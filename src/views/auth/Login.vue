@@ -50,6 +50,7 @@ export default class Login extends Basic {
   }
 
   login() {
+    this.$emit('showCarregando')
     axios({
       method: 'get',
       url: 'http://localhost:3000/auth/login',
@@ -57,6 +58,7 @@ export default class Login extends Basic {
         'authorization': 'Basic ' + btoa( this.credentials.user.trim() + ':' + this.credentials.pass.trim())
       }
     }).then( (response: any) => {
+      this.$emit('hideCarregando')
       if (this.salvarLogin) {
         localStorage.setItem('username', this.credentials.user)
         localStorage.setItem('password', this.credentials.pass)
@@ -65,9 +67,10 @@ export default class Login extends Basic {
       localStorage.setItem('token', token)
       this.$router.push('/')
     }).catch( (err: any) => {
+      this.$emit('hideCarregando')
       localStorage.removeItem('username')
       localStorage.removeItem('password')
-      this.$emit('showMessage', err.response.data.message ?? 'Erro')
+      this.$emit('showMessage', err.response.data.message ?? 'Erro ' + err.response.status)
     })
   }
 }

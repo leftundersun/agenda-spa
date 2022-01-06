@@ -5,10 +5,10 @@
         <h4>Favoritos</h4>
       </div>
     </div>
-    <div v-if="user.favoritos.length > 0" class="row">
+    <div v-if="loggedUser.favoritos.length > 0" class="row">
       <FavoritoCard
         @showContatos="setContatosModal($event)"
-        v-for="favorito in user.favoritos"
+        v-for="favorito in loggedUser.favoritos"
         :favorito="favorito"
         :key="favorito.id"/>
     </div>
@@ -31,7 +31,7 @@ import { User, Role, Pessoa, Endereco, Cidade, Estado, Pais, Contato, ContatoTip
 
 @Options({
   props: {
-    user: Object
+    loggedUser: Object
   },
   components: {
     FavoritoCard,
@@ -40,7 +40,7 @@ import { User, Role, Pessoa, Endereco, Cidade, Estado, Pais, Contato, ContatoTip
 })
 export default class Home extends Basic {
 
-  user: User = {
+  loggedUser: User = {
     id: 0,
     username: '',
     pessoa_id: 0,

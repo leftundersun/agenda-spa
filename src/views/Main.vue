@@ -13,7 +13,7 @@
         @showMessage="showMessage($event)"
         @showCarregando="showCarregando()"
         @hideCarregando="hideCarregando()"
-        v-model:user="user"
+        v-model:loggedUser="loggedUser"
         @updateLoggedUser="getLoggedUser()" />
       </div>
     </div>
@@ -26,7 +26,7 @@ import { User, Role, Pessoa, Endereco, Cidade, Estado, Pais, Contato, ContatoTip
 
 export default class Main extends Basic {
 
-  user: User = {
+  loggedUser: User = {
     id: 0,
     username: '',
     pessoa_id: 0,
@@ -35,7 +35,7 @@ export default class Main extends Basic {
   }
 
   get isAdmin() {
-    return this.user.roles!.filter( (role) => { return role.id == 1 } ).length == 1
+    return this.loggedUser.roles!.filter( (role) => { return role.id == 1 } ).length == 1
   }
 
   mounted() {
@@ -46,7 +46,7 @@ export default class Main extends Basic {
     this.showCarregando()
     this.axiosInstance.get('/user').then( (response: any) => {
       this.hideCarregando()
-      this.user = response.data.user
+      this.loggedUser = response.data.user
     }).catch( (err: any) => {
       this.hideCarregando()
       this.tratarErro(err)
