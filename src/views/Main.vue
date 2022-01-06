@@ -13,7 +13,8 @@
         @showMessage="showMessage($event)"
         @showCarregando="showCarregando()"
         @hideCarregando="hideCarregando()"
-        v-model:user="user" />
+        v-model:user="user"
+        @updateLoggedUser="getLoggedUser()" />
       </div>
     </div>
   </div>
@@ -38,9 +39,16 @@ export default class Main extends Basic {
   }
 
   mounted() {
+    this.getLoggedUser()
+  }
+
+  getLoggedUser() {
+    this.showCarregando()
     this.axiosInstance.get('/user').then( (response: any) => {
+      this.hideCarregando()
       this.user = response.data.user
     }).catch( (err: any) => {
+      this.hideCarregando()
       this.tratarErro(err)
     })
   }

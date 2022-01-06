@@ -57,6 +57,10 @@ export default class Home extends Basic {
   }
   showModal = false
 
+  mounted() {
+    this.$emit('updateLoggedUser')
+  }
+
   setContatosModal(pessoa: Pessoa) {
     this.pessoaModal = pessoa
     this.showModal = true
