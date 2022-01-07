@@ -5,6 +5,18 @@
     <router-link to="/pessoas" class="btn btn-secondary">Pessoas</router-link>
     <router-link to="/contatos" class="btn btn-secondary">Contatos</router-link>
     <button @click="logoff()" class="btn btn-secondary">Logoff</button>
+    <div class="dropdown custom-float-right">
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownOptions" data-bs-toggle="dropdown" aria-expanded="false">
+        @{{ loggedUser.username }}
+      </button>
+      <ul class="dropdown-menu custom-dropdown-menu" aria-labelledby="dropdownOptions">
+        <li>
+          <button class="dropdown-item" @click="editSelf()">
+            Editar minhas informações
+          </button>
+        </li>
+      </ul>
+    </div>
   </nav>
   <div class="container">
     <div class="row">
@@ -53,18 +65,23 @@ export default class Main extends Basic {
     })
   }
 
-  showMessage(message: string) {
-    this.$emit('showMessage', message)
-  }
-
   logoff() {
     localStorage.removeItem('token')
     this.$router.replace('/login')
   }
 
+  editSelf() {
+    this.$router.push('/user/edit/' + this.loggedUser.id)
+  }
+
+  showMessage(message: string) {
+    this.$emit('showMessage', message)
+  }
+
   showCarregando() {
     this.$emit('showCarregando')
   }
+
   hideCarregando() {
     this.$emit('hideCarregando')
   }
@@ -74,5 +91,17 @@ export default class Main extends Basic {
 <style scoped>
 .container {
   margin-top: 10px;
+}
+
+.custom-float-right {
+  position: absolute;
+  right: 0%;
+  margin-right: 10px;
+}
+
+.custom-dropdown-menu {
+  position: absolute;
+  left: unset;
+  right: 0%;
 }
 </style>
