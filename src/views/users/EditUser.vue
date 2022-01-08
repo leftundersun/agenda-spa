@@ -29,11 +29,21 @@ import moment from 'moment';
 import { User, Role, Pessoa, Endereco, Cidade, Estado, Pais, Contato, ContatoTipo, ContatoCategoria } from '@/types'
 
 @Options({
+  props: {
+    loggedUser: Object
+  },
   components: {
     FormUser
   }
 })
 export default class CreateUser extends Basic {
+
+  loggedUser: User = {
+    id: 0,
+    username: '',
+    pessoa_id: 0,
+    favoritos: []
+  }
 
   user: User = {
     id: 0,
@@ -104,7 +114,11 @@ export default class CreateUser extends Basic {
     formData.append('foto', this.user.pessoa!.foto)
     formData.append('user', JSON.stringify(this.user) )
     this.axiosInstance.put('/user/' + this.user.id, formData).then( (response: any) => {
-      this.$router.push('/users')
+      if (this.user.id == this.loggedUser.id) {
+        this.$router.push('/')
+      } else {
+        this.$router.push('/users')
+      }
     }).catch( (err: any) => {
       this.tratarErro(err)
     })

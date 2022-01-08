@@ -4,16 +4,16 @@
     <router-link to="/users" class="btn btn-secondary" v-show="isAdmin">Usuários</router-link>
     <router-link to="/pessoas" class="btn btn-secondary">Pessoas</router-link>
     <router-link to="/contatos" class="btn btn-secondary">Contatos</router-link>
-    <button @click="logoff()" class="btn btn-secondary">Logoff</button>
     <div class="dropdown custom-float-right">
       <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownOptions" data-bs-toggle="dropdown" aria-expanded="false">
         @{{ loggedUser.username }}
       </button>
       <ul class="dropdown-menu custom-dropdown-menu" aria-labelledby="dropdownOptions">
         <li>
-          <button class="dropdown-item" @click="editSelf()">
-            Editar minhas informações
-          </button>
+          <button class="dropdown-item" @click="editSelf()">Editar minhas informações</button>
+        </li>
+        <li>
+          <button @click="logoff()" class="dropdown-item">Logoff</button>
         </li>
       </ul>
     </div>
