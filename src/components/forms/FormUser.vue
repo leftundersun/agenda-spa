@@ -28,7 +28,7 @@
     </div>
   </div>
   <div class="card mt-2">
-    <h5 class="text-info">Pessoa</h5>
+    <h5 class="text-info">Dados Pessoais</h5>
     <div class="row g-3 mb-3">
       <div class="col-4" v-if="user.id == 0" >
         <label for="pessoa" class="form-label">Cadastrar esse usuário para</label>

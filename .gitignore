@@ -2,6 +2,7 @@
 node_modules
 /dist
 todo
+.env
 
 # local env files
 .env.local

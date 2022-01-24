@@ -7,12 +7,13 @@ Essa SPA ainda está em desenvolvimento.
 
 Um back-end Node.js também está em desenvolvimento, você pode conferir em https://github.com/sirhennig/agenda-api.
 
-### Rodar em modo de desenvolvimento
-```
-npm run serve
-```
+### Rodando pela primeira vez
+Para rodar a spa pela primeira vez, siga os seguintes passos:
 
-### Compilar para modo de produção
+* crie um arquivo chamado `.env` na raiz do projeto como o exemplo abaixo:
 ```
-npm run build
+// endereço da api com a qual a aplicação irá se comunicar
+VUE_APP_API_ADRESS=http://localhost:3000
 ```
+* execute o commando `npm install` para instalar o pacotes necessários
+* rode o sistema com o comando `npm run serve`

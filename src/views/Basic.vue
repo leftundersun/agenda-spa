@@ -11,7 +11,7 @@ export default class Basic extends Vue {
   beforeMount() {
     var token = localStorage.getItem('token')
     this.axiosInstance = axios.create({
-      baseURL: 'http://localhost:3000',
+      baseURL: process.env.VUE_APP_API_ADRESS,
       headers: {
         'authorization': 'Bearer ' + (token ?? '')
       }
