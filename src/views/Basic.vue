@@ -22,7 +22,7 @@ export default class Basic extends Vue {
     if (err.response.status == 401) {
       this.$router.replace('/login')
     } else {
-      this.$emit('showMessage', err.response.data.message ?? 'Erro')
+      this.$emit('showMessage', err.response.data.message ?? 'Ocorreu um erro inesperado')
     }
   }
 }

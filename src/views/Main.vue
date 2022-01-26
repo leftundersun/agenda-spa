@@ -1,9 +1,9 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-light bg-secondary" style="padding: 5px 10px;">
-    <router-link to="/" class="btn btn-secondary">Home</router-link>
-    <router-link to="/users" class="btn btn-secondary" v-show="isAdmin">Usuários</router-link>
-    <router-link to="/pessoas" class="btn btn-secondary">Pessoas</router-link>
-    <router-link to="/contatos" class="btn btn-secondary">Contatos</router-link>
+    <router-link to="/" class="btn btn-secondary me-2">Home</router-link>
+    <router-link to="/users" class="btn btn-secondary me-2" v-show="isAdmin">Usuários</router-link>
+    <router-link to="/pessoas" class="btn btn-secondary me-2">Pessoas</router-link>
+    <router-link to="/contatos" class="btn btn-secondary me-2">Contatos</router-link>
     <div class="dropdown custom-float-right">
       <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownOptions" data-bs-toggle="dropdown" aria-expanded="false">
         @{{ loggedUser.username }}

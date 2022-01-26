@@ -70,7 +70,7 @@ export default class Login extends Basic {
       this.$emit('hideCarregando')
       localStorage.removeItem('username')
       localStorage.removeItem('password')
-      this.$emit('showMessage', err.response.data.message ?? 'Erro ' + err.response.status)
+      this.$emit('showMessage', err.response.data.message ?? 'Erro: ' + err.response.status)
     })
   }
 }
