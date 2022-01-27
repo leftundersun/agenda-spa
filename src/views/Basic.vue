@@ -31,7 +31,7 @@ export default class Basic extends Vue {
 <style>
   
 .card {
-  padding: 10px;
+  padding: 8px;
 }
 
 </style>

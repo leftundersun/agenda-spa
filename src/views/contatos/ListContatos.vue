@@ -14,7 +14,7 @@
       @selectPage="selectPage($event)"
       @search="searchChange($event)"
     />
-    <div v-if="contatos.length > 0" class="row">
+    <div v-if="contatos.length > 0" class="row gx-2">
       <ContatoCard
         @addToFavoritos="addToFavoritos($event)"
         @removeFromFavoritos="removeFromFavoritos($event)"

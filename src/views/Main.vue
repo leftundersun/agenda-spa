@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-secondary" style="padding: 5px 10px;">
+  <nav class="navbar navbar-expand-lg navbar-light bg-secondary" style="padding: 4px 8px;">
     <router-link to="/" class="btn btn-secondary me-2">Home</router-link>
     <router-link to="/users" class="btn btn-secondary me-2" v-show="isAdmin">Usuários</router-link>
     <router-link to="/pessoas" class="btn btn-secondary me-2">Pessoas</router-link>
@@ -90,13 +90,13 @@ export default class Main extends Basic {
 </script>
 <style scoped>
 .container {
-  margin-top: 10px;
+  margin-top: 8px;
 }
 
 .custom-float-right {
   position: absolute;
   right: 0%;
-  margin-right: 10px;
+  margin-right: 8px;
 }
 
 .custom-dropdown-menu {

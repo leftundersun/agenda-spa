@@ -14,7 +14,7 @@
       @selectPage="selectPage($event)"
       @search="searchChange($event)"
     />
-    <div v-if="pessoas.length > 0" class="row">
+    <div v-if="pessoas.length > 0" class="row gx-2">
       <PessoaCard
         @showMessage="showMessage($event)"
         @showInfo="setPessoaModal($event)"

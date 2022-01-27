@@ -14,7 +14,7 @@
       @selectPage="selectPage($event)"
       @search="searchChange($event)"
     />
-    <div v-if="users.length > 0" class="row">
+    <div v-if="users.length > 0" class="row gx-2">
       <UserCard
         @showMessage="showMessage($event)"
         @showInfo="setUserModal($event)"
