@@ -1,0 +1,16 @@
+version: '3'
+
+networks:
+  network:
+    driver: bridge
+services:
+  app:
+    build: .
+    image: agenda_spa
+    container_name: vue_spa_agenda
+    ports:
+      - '8080:8080'
+    networks:
+      - network
+    environment:
+      - VUE_APP_API_ADRESS=http://localhost:3000
