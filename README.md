@@ -7,6 +7,6 @@ Essa SPA ainda está em desenvolvimento.
 
 Um back-end Node.js também está em desenvolvimento, você pode conferir em https://github.com/sirhennig/agenda-api.
 
-### Rodando pela primeira vez
+### Rodando a aplicação
 
 * execute `docker-compose up` na raiz do projeto
