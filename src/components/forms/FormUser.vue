@@ -14,9 +14,7 @@
         <label for="roles" class="form-label">Roles</label>
         <select size="2" multiple name="roles" class="form-control">
           <option
-            style="color: black;"
-            disabled="true"
-            @click.stop.prevent="selectRole($event)"
+            @mousedown.stop.prevent="selectRole($event)"
             :selected="user.roles.filter( (item) => { return item.id == role.id }).length > 0"
             v-for="role in roles"
             :key="role.id"
